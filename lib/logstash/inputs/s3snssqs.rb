@@ -5,19 +5,10 @@ require "logstash/timestamp"
 require "logstash/plugin_mixins/aws_config"
 require "logstash/shutdown_watcher"
 require "logstash/errors"
-require "aws-sdk-s3"
-require "aws-sdk-sns"
-require "aws-sdk-sqs"
-
-# "object-oriented interfaces on top of API clients"...
-# => Overhead. FIXME: needed?
-#require "aws-sdk-resources"
+require "aws-sdk"
 require "fileutils"
 require "concurrent"
 require 'tmpdir'
-# unused in code:
-#require "stud/interval"
-#require "digest/md5"
 
 require 'java'
 java_import java.io.InputStream
@@ -160,6 +151,7 @@ class LogStash::Inputs::S3SNSSQS < LogStash::Inputs::Threadable
   # Session name to use when assuming an IAM role
   config :s3_role_session_name, :validate => :string, :default => "logstash"
   config :delete_on_success, :validate => :boolean, :default => false
+  config :move_to_bucket, :validate => :string, :default => nil
   # Whether or not to include the S3 object's properties (last_modified, content_type, metadata)
   # into each Event at [@metadata][s3]. Regardless of this setting, [@metdata][s3][key] will always
   # be present.
@@ -272,6 +264,7 @@ class LogStash::Inputs::S3SNSSQS < LogStash::Inputs::Threadable
     @s3_downloader = S3Downloader.new(@logger, @received_stop, {
       s3_client_factory: @s3_client_factory,
       delete_on_success: @delete_on_success,
+      move_to_bucket: @move_to_bucket,
       include_object_properties: @include_object_properties
     })
     @codec_factory = CodecFactory.new(@logger, {
@@ -343,6 +336,7 @@ class LogStash::Inputs::S3SNSSQS < LogStash::Inputs::Threadable
           @s3_downloader.cleanup_local_object(record)
           # re-throw if necessary:
           throw :skip_delete unless completed
+          @s3_downloader.move_s3object(record)
           @s3_downloader.cleanup_s3object(record)
         end
       end

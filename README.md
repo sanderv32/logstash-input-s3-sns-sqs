@@ -40,7 +40,7 @@ It is fully free and fully open source. The license is Apache 2.0.
  The logstash node therefore must have sqs permissions + the permissions to download objects
  from the s3 buckets that send events to the queue.
  (If logstash nodes are running on EC2 you should use a ServerRole to provide permissions)
- [source,json]
+ ```json
    {
        "Version": "2012-10-17",
        "Statement": [
@@ -71,6 +71,7 @@ It is fully free and fully open source. The license is Apache 2.0.
            }
        ]
    }
+   ```
 
 ## Need Help?
 

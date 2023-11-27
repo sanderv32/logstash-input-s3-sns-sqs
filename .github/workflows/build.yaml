@@ -28,5 +28,5 @@ jobs:
           tag: ${{ github.ref }}
           prerelease: true
           file_glob: true
-          file: *.gem
+          file: ./*.gem
 

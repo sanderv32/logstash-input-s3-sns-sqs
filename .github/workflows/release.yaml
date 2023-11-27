@@ -2,7 +2,8 @@ name: Release
 run-name: "Release GEM"
 
 on:
-  workflow_dispatch:
+  release:
+    types: [created]
 
 jobs:
   build:

@@ -27,5 +27,6 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref }}
           prerelease: true
+          file_glob: true
           file: *.gem
 

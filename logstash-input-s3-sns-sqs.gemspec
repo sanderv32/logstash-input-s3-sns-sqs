@@ -33,7 +33,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'logstash-codec-json_lines', '~> 3.1'
   s.add_development_dependency 'logstash-codec-multiline', '~> 3.1'
   s.add_development_dependency 'logstash-codec-line', '~> 3.1'
-  s.add_development_dependency 'logstash-devutils', '~> 0.9'
+  s.add_development_dependency 'logstash-devutils', '~> 0.0'
   s.add_development_dependency 'logstash-input-generator', '~> 3.1'
   s.add_development_dependency 'timecop', '~> 0.9'
 

@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'aws-sdk-s3', '~> 1'
   s.add_runtime_dependency 'aws-sdk-sqs', '~> 1'
   s.add_runtime_dependency 'aws-sdk-sns', '~> 1'
-  s.add_runtime_dependency 'aws-sdk-resourcegroups', '~> 3'
+  s.add_runtime_dependency 'aws-sdk-resourcegroups', '~> 1.56'
 
   s.add_development_dependency 'logstash-codec-json_lines', '~> 3.1'
   s.add_development_dependency 'logstash-codec-multiline', '~> 3.1'

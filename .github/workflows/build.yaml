@@ -1,16 +1,22 @@
+name: Release
+run-name: "Release GEM"
+
 on:
   workflow_dispatch:
 
 jobs:
   build:
     name: Build GEM
-    runs-on: jruby
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: bundle install
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.1"
+          bundler-cache: true
 
       - name: Build plugin
         run: gem build logstash-input-s3-sns-sqs.gemspec
